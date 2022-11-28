@@ -11,13 +11,13 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
 def bean_model():
-    return tf.keras.models.load_model('Models2/last_bean_model')
+    return tf.keras.models.load_model('static/Models2/last_bean_model')
 
 # Check its architecture
-# bean_model.summary()
+# bean_model().summary()
 
 def water_stress():
-    return tf.keras.models.load_model('STRESSED_Model/Irrigate_model')
+    return tf.keras.models.load_model('static/STRESSED_Model/Irrigate_model')
 
 # Check its architecture
-# stress_model.summary()
+# water_stress().summary()
