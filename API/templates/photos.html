@@ -35,7 +35,13 @@
 						<div class="card-body">
 							<img src="{{image.name.url}}" class="garden" alt="{{image.name}}">
 						</div>
-						<div class="card-footer">{{image.predict}}->{{image.bean_score}}||{{image.stress_score}}</div>
+						<div class="card-footer">{{image.predict}}->{{image.bean_score|floatformat:2}}%||{{image.stress_score|floatformat:2}}%</div>
+					</div>
+				</div>
+				{% empty %}
+				<div class="col-xxl-4 col-md-6">
+					<div class="card">
+						<p>No Images submitted yet</p>
 					</div>
 				</div>
 				{% endfor %}
