@@ -33,8 +33,9 @@
 				<div class="col-xxl-4 col-md-6">
 					<div class="card">
 						<div class="card-body">
-							<img src="{{image.name.url}}" class="garden">
+							<img src="{{image.name.url}}" class="garden" alt="{{image.name}}">
 						</div>
+						<div class="card-footer">{{image.predict}}->{{image.bean_score}}||{{image.stress_score}}</div>
 					</div>
 				</div>
 				{% endfor %}

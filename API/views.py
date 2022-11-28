@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import SensorsSerial,ImageSerializer
-from .models import Sensors,Image,Command
+from API.serializers import SensorsSerial,ImageSerializer
+from API.models import Sensors,Image,Command
 from django.views.generic import View
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate,get_user_model, logout
-from API.ai import bean_model, water_stress
+from API.ai import predict, predict2
+import json
 class Irrigate(View):
 	def get(self,request):
 		datas = Command.objects.get(id=1)
@@ -54,7 +55,6 @@ class Photos(View):
 
 class IndexView(View):
 	def get(self,request):
-		bean_model().summary()
 		if(request.user.is_authenticated != True):
 			return redirect('/login')
 		sensor = Sensors.objects.last()
@@ -94,8 +94,22 @@ class ImageUpload(APIView):
 		serializer = ImageSerializer(data=request.data)
 		if serializer.is_valid():
 			serializer.save()
-			return Response("success")
-		return Response(serializer.errors)
+			image = serializer.data['name'][1:]
+			data = predict(image)
+			img = Image.objects.get(name=image[6:])
+			if(data['stress'] != 'healthy' or data['bean'] != 'healthy'):
+				img.predict = "{}/{}".format(data['bean'],data['stress'])
+				img.bean_score = data['bean_score']
+				img.stress_score = data['stress_score']
+			else:
+				img.predict = data['stress']
+				img.bean_score = data['bean_score']
+				img.stress_score = data['stress_score']
+			img.save()
+			# json.loads({'name':'kevin', 'data':"empty"})
+			return Response(data)
+			# return Response({'name':'kevin', 'data':"empty"})
+		return Response(serializer.data)
 		
 class TestView(APIView):
 	def get(self,request, *args, **kwargs):

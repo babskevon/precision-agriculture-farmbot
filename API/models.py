@@ -16,7 +16,10 @@ class Sensors(models.Model):
 		return self.soil_moisture
 
 class Image(models.Model):
-	name = models.ImageField(upload_to='API/static/garden_pic',null = True)
+	name = models.ImageField(upload_to='garden_pic',null = True)
+	predict = models.CharField(default='healthy',max_length=150)
+	bean_score = models.CharField(max_length=150,null=True)
+	stress_score = models.CharField(max_length=150,null=True)
 	create = models.DateTimeField(auto_now=True)
 
 class Command(models.Model):
