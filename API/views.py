@@ -6,7 +6,7 @@ from .models import Sensors,Image,Command
 from django.views.generic import View
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate,get_user_model, logout
-
+# from API.ai import bean_model, water_stress
 
 class Irrigate(View):
 	def get(self,request):
@@ -55,6 +55,7 @@ class Photos(View):
 
 class IndexView(View):
 	def get(self,request):
+		# water_stress().summary()
 		if(request.user.is_authenticated != True):
 			return redirect('/login')
 		sensor = Sensors.objects.last()
