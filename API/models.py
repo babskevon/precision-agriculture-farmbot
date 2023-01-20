@@ -22,6 +22,11 @@ class Image(models.Model):
 	stress_score = models.CharField(max_length=150,null=True)
 	create = models.DateTimeField(auto_now=True)
 
+class Height(models.Model):
+	name = models.ImageField(upload_to='height',null = True)
+	height = models.CharField(max_length=150, null=True)
+	create = models.DateTimeField(auto_now=True)
+
 class Command(models.Model):
 	cmd = models.BooleanField(default=False)
 	mH = models.CharField(max_length=10,blank=True, default=80.0)

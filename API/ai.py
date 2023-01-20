@@ -49,9 +49,7 @@ def predict(image):
             "bean":bean_classes[np.argmax(score2)],
             "bean_score":np.max(score2) * 100
         }
-    print(data)
     return data
-
 # images = get_local('media/garden_pic/img_2022-11-28-221626.627744.jpg')
 # predictions = bean_model().predict(images)
 # score = tf.nn.softmax(predictions[0])

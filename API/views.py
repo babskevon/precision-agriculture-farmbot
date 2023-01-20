@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from API.serializers import SensorsSerial,ImageSerializer
-from API.models import Sensors,Image,Command
+from API.serializers import SensorsSerial,ImageSerializer,HeightSerializer
+from API.models import Sensors,Image,Command,Height
 from django.views.generic import View
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate,get_user_model, logout
-from API.ai import predict, predict2
+from API.ai import predict
+from API.plant import get_image
 import json
 class Irrigate(View):
 	def get(self,request):
@@ -40,7 +41,14 @@ class Irrigate(View):
 		except:
 			return HttpResponse(3)
 
-
+class Growth(View):
+	def get(self,request):
+		images = Height.objects.all().order_by('-id')
+		data = {
+			'images':images
+		}
+		return render(request,'growth.html',data)
+		
 class Photos(View):
 	def get(self, request):
 		images = Image.objects.all().order_by('-id')
@@ -81,7 +89,28 @@ class Login(View):
 		except:
 			return HttpResponse("failed to login")
 
+class PlantHeight(APIView):
+	def get(self,request, *args, **kwargs):
+		data = {
+			"post":"Image",
+			"url":"https://farmbotug.pythonanywhere.com/photo2/"
+		}
+		return Response(data)
+	def post(self,request, *args, **kwargs):
+		serializer = HeightSerializer(data=request.data)
 
+		if serializer.is_valid():
+			serializer.save()
+			image = serializer.data['name'][1:]
+			height, name = get_image(image)
+			img = Height.objects.get(name=image[6:])
+			img.height = height
+			img.save()
+			print(height)
+			return Response({"height":height})
+		else:
+			return Response("Invalid")
+		return Response("failure")
 class ImageUpload(APIView):
 	def get(self,request, *args, **kwargs):
 		data = {
@@ -97,6 +126,8 @@ class ImageUpload(APIView):
 			image = serializer.data['name'][1:]
 			data = predict(image)
 			img = Image.objects.get(name=image[6:])
+			print("/home/farmbotUg/hybrid/media/{}".format(img.name))
+			print("kevin")
 			if(data['stress'] != 'healthy' or data['bean'] != 'healthy'):
 				img.predict = "{}/{}".format(data['bean'],data['stress'])
 				img.bean_score = data['bean_score']
