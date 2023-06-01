@@ -45,7 +45,7 @@ SECRET_KEY = 'dvcx_%ok5gmx!+vgs1gh_glji=r)8*_pnp@8w27=nbd=2&h!2i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','83.229.82.211']
 
 
 # Application definition
@@ -143,9 +143,12 @@ USE_TZ = True
 import os
 STATIC_URL = "/static/"
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(  BASE_DIR, "media")
+#MEDIA_ROOT = os.path.join(  BASE_DIR, "media")
 # print(BASE_DIR)
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATIC_ROOT = '/root/static'
+MEDIA_ROOT = '/root/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
