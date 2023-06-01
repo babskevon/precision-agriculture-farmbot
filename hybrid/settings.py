@@ -45,7 +45,7 @@ SECRET_KEY = 'dvcx_%ok5gmx!+vgs1gh_glji=r)8*_pnp@8w27=nbd=2&h!2i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','83.229.82.211','83.229.82.211:8000']
+ALLOWED_HOSTS = ['83.229.82.211']
 
 
 # Application definition
