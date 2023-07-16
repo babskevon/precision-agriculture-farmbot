@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static widget_tweaks %}
+
+
+{% block content %}
+<div class="row row-no-gutters">
+    <div class="card">
+        <div class="card-header">
+            <b>Upload New firmware</b>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for=""><b>Firmware file</b></label>
+                        {{form.file|add_class:"form-control"}}
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label for=""><b>Version</b></label>
+                        {{form.version|add_class:"form-control"}}
+                    </div>
+                    <div class="col-md-12 form-check">
+                        <label for=""><b>Is It current update</b></label>
+                        {{form.current_update|add_class:"form-check-input"}}
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label for=""><b>Message</b></label>
+                        {{form.message|add_class:"form-control"}}
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock  %}

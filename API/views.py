@@ -8,7 +8,41 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate,get_user_model, logout
 from API.ai import predict
 from API.plant import get_image
+from django.urls import reverse
 import json
+from API.form import UploadForm
+from API.models import FileUpdate
+from django.shortcuts import get_object_or_404
+
+class UpdateFirmwareView(View):
+	def get(self, request, *args, **kwargs):
+		files = FileUpdate.objects.order_by('-id').first()
+		if files:
+			file_object = get_object_or_404(FileUpdate, id=files.id)
+			file_data = file_object.file
+			response = HttpResponse(file_data, content_type='application/octet-stream')
+			response['Content-Disposition'] = 'attachment; filename="%s"' % 'test.json'
+			return response
+		else:
+			return HttpResponse("No current file")
+		
+class UploadFileView(View):
+	def get(self, request):
+		data = {
+			'form': UploadForm()
+		}
+		return render(request, 'upload.html', data)
+	def post(self, request):
+		form = UploadForm(request.POST, request.FILES)
+		if form.is_valid():
+			form.save()
+			return redirect(reverse('upload-update'))
+		else:
+			data = {
+				'form': form
+			}
+			return render(request, 'upload.html', data)
+
 class Irrigate(View):
 	def get(self,request):
 		datas = Command.objects.get(id=1)

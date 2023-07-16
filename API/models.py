@@ -31,3 +31,11 @@ class Command(models.Model):
 	cmd = models.BooleanField(default=False)
 	mH = models.CharField(max_length=10,blank=True, default=80.0)
 	mL = models.CharField(max_length=10, blank=True,default=30.0)
+
+
+class FileUpdate(models.Model):
+	file = models.FileField(upload_to='updates')
+	created_at = models.DateTimeField(auto_now=True)
+	current_update = models.BooleanField(default=False)
+	version = models.CharField(default='1.0.0',max_length=20)
+	message = models.TextField(blank=True, null=True)

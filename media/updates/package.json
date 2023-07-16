@@ -1,0 +1,48 @@
+{
+    "name": "kakasa-kumusoft-middleware",
+    "version": "1.0.0",
+    "description": "RESTful API for the URA EFRIS API",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon"
+    },
+    "keywords": [
+        "URA",
+        "EFRIS",
+        "KUMUSOFT"
+    ],
+    "author": "Kumusoft Solutions Ltd",
+    "license": "ISC",
+    "dependencies": {
+        "app-root-path": "^3.0.0",
+        "async": "^3.2.0",
+        "axios": "^0.21.1",
+        "body-parser": "^1.19.0",
+        "config": "^3.3.2",
+        "core-js": "^3.8.0",
+        "crypto": "^1.0.1",
+        "date-fns": "^2.16.1",
+        "datetime-helper": "^1.0.0",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "follow-redirects": "^1.13.0",
+        "js-yaml": "^3.14.0",
+        "mongoose": "^5.10.9",
+        "morgan": "^1.10.0",
+        "node-cron": "^2.0.3",
+        "node-forge": "^0.10.0",
+        "node-gzip": "^1.1.2",
+        "paginate-info": "^1.0.4",
+        "qrcode": "^1.4.4",
+        "request": "^2.88.2",
+        "ssl-root-cas": "^1.3.1",
+        "validator": "^13.1.17",
+        "winston": "^3.3.3",
+        "winston-daily-rotate-file": "^3.10.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.6",
+        "styled-components": "^5.2.1"
+    }
+}
