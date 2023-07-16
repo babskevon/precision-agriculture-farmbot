@@ -19,9 +19,9 @@ class UpdateFirmwareView(View):
 		files = FileUpdate.objects.order_by('-id').first()
 		if files:
 			file_object = get_object_or_404(FileUpdate, id=files.id)
-			file_data = file_object.file
-			response = HttpResponse(file_data, content_type='application/octet-stream')
-			response['Content-Disposition'] = 'attachment; filename="%s"' % 'test.json'
+			file_data = file_object.file.path
+			response = HttpResponse(open(file_data, 'rb'), content_type='application/octet-stream')
+			response['Content-Disposition'] = 'attachment; filename="%s"' % file_object.file.name
 			return response
 		else:
 			return HttpResponse("No current file")
